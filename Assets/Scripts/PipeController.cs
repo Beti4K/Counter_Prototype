@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class PipeController : MonoBehaviour
 {
-    private float speed = 10.0f;
-    private float bound = 8.0f;
-    private bool gameActive;
-    public void StartGame()
-    {
-        gameActive = true;
-    }
+    private float speed = 15.0f;
+    private float bound = 10.0f;
+    public bool gameActive;
+
+    [SerializeField] GameObject gameOverWindow;
 
     void Update()
     {
@@ -26,5 +24,11 @@ public class PipeController : MonoBehaviour
                 transform.position = new Vector3(transform.position.x, transform.position.y, -bound);
             }
         }
+    }
+
+    public void GameOver()
+    {
+        gameActive = false;
+        gameOverWindow.SetActive(true);
     }
 }
