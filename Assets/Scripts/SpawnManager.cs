@@ -14,6 +14,7 @@ public class SpawnManager : MonoBehaviour
     {
         StartCoroutine(Wait());
         pipe.gameActive = true;
+        StartCoroutine(pipe.TimePass());
     }
 
     IEnumerator Wait()
@@ -23,7 +24,7 @@ public class SpawnManager : MonoBehaviour
         Instantiate(spawnPrefab[Random.Range(0, spawnPrefab.Length)], spawnPosition, transform.rotation);
 
         //keep spawning if the game is active
-        if (pipe.gameActive)
+        if (pipe.levelTime > waitingTime)
         {
             StartCoroutine(Wait());
         }

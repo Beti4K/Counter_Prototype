@@ -23,8 +23,8 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void LoadScene()
+    public void LoadScene(string sceneName)
     {
-        SceneManager.LoadScene("MetalForge");
+        SceneManager.LoadScene(sceneName);
     }
 }
