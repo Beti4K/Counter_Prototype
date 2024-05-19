@@ -28,6 +28,6 @@ public class Counter : MonoBehaviour
             CounterYText.text = "Gold: " + GameManager.Instance.CountY;
         }
 
-        GameObject.Destroy(other);
+        GameObject.Destroy(other.gameObject);
     }
 }

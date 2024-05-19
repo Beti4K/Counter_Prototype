@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class ForgeHandler : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI Recipe;
     [SerializeField] TextMeshProUGUI Score;
     private int points;
+    private int healthPoints = 3;
 
     [SerializeField] int goldRecipe;
     [SerializeField] int copperRecipe;
@@ -16,6 +18,13 @@ public class ForgeHandler : MonoBehaviour
     [SerializeField] GameObject[] Prefabs;
     [SerializeField] TextMeshProUGUI[] Texts;
     [SerializeField] int[] Amounts;
+
+    [SerializeField] Button[] Buttons;
+
+    [SerializeField] GameObject gameOverWindow;
+    [SerializeField] TextMeshProUGUI gameOverText;
+
+    [SerializeField] TextMeshProUGUI lives;
     void Start()
     {
         points = 0;
@@ -36,7 +45,7 @@ public class ForgeHandler : MonoBehaviour
     {
         if (Amounts[colorIndex] > 0)
         {
-            Instantiate(Prefabs[colorIndex], new Vector3(Random.Range(-5f, -3f), 1.0f, Random.Range(-4f, -2f)), transform.rotation);
+            Instantiate(Prefabs[colorIndex], new Vector3(Random.Range(-2.3f, -2.1f), 1.0f, Random.Range(-3.1f, -2.9f)), transform.rotation);
             Amounts[colorIndex] -= 1;
             Texts[colorIndex].text = "Remaining: " + Amounts[colorIndex];
         }
@@ -54,8 +63,17 @@ public class ForgeHandler : MonoBehaviour
 
         if (gold == goldRecipe && silver == silverRecipe && copper == copperRecipe)
         {
-            points += 1;
+            points += (gold + copper + silver) * 5;
             Score.text = "Score: " + points;
+        }
+        else
+        {
+            healthPoints -= 1;
+            lives.text = "Mistakes allowed: " + healthPoints;
+            if (healthPoints == 0)
+            {
+                GameOver();
+            }
         }
 
         GameObject[] golds = GameObject.FindGameObjectsWithTag("Yellow");
@@ -82,7 +100,17 @@ public class ForgeHandler : MonoBehaviour
         Recipe.text = "Gold: " + goldRecipe + "\nCopper: " + copperRecipe + "\nSilver: " + silverRecipe;
     }
 
-    void ResetGame()
+    void GameOver()
+    {
+        gameOverText.text = "Oops! Too many mistakes!\nScore:" + points;
+        gameOverWindow.SetActive(true);
+        for (int i = 0; i < Buttons.Length; i++)
+        {
+            Buttons[i].interactable = false;
+        }
+
+    }
+    public void ResetGame()
     {
         GameManager.Instance.CountY = 0;
         GameManager.Instance.CountB = 0;

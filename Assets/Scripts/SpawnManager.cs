@@ -20,6 +20,7 @@ public class SpawnManager : MonoBehaviour
     IEnumerator Wait()
     {
         yield return new WaitForSeconds(waitingTime);
+        waitingTime -= 0.05f;
         spawnPosition = new Vector3(5.4f, 18.0f, Random.Range(-boundZ, boundZ));
         Instantiate(spawnPrefab[Random.Range(0, spawnPrefab.Length)], spawnPosition, transform.rotation);
 

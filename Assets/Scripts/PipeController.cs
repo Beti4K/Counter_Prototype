@@ -13,6 +13,11 @@ public class PipeController : MonoBehaviour
     [SerializeField] GameObject gameOverWindow;
     [SerializeField] Text Timer;
 
+    private void Start()
+    {
+        Timer.text = "Time: " + levelTime.ToString() + "s";
+    }
+
     void Update()
     {
         if (gameActive)
@@ -44,8 +49,8 @@ public class PipeController : MonoBehaviour
         }
         else
         {
-            Timer.text = "Time: " + levelTime.ToString() + "s";
             levelTime -= 1.0f;
+            Timer.text = "Time: " + levelTime.ToString() + "s";
             StartCoroutine(TimePass());
         }
     }
